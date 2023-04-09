@@ -69,8 +69,8 @@ function App() {
 
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center gap-5">
-      <div className="px-20 max-w-5xl flex gap-5 flex-wrap justify-evenly">
+    <div className="w-screen flex justify-center items-center gap-5 ">
+      <div className="px-12 py-12 sm:px-20 max-w-5xl flex gap-5 flex-wrap justify-evenly">
         <h1 className="text-4xl font-bold w-full text-center mb-2" style={{color: "#635bff"}}>
           Calculadora de pagos que recibo en Stripe
         </h1>
