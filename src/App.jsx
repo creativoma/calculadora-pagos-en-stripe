@@ -34,7 +34,7 @@ function App() {
   const [input6, setInput6] = useState(0);
 
   useEffect(() => {
-    fetch("https://decoancasti.com/api/cotizacion-eur-usd/index.php")
+    fetch("https://creativoma.com/api/cotizacion-eur-usd/index.php")
       // Recuperamos la respuesta que ya viene en formato JSON
       .then((response) => response.json())
       // Recuperamos los datos de la respuesta
