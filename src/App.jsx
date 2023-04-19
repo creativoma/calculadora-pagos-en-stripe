@@ -6,20 +6,19 @@ import InputAdornment from "@mui/material/InputAdornment";
 // Variables
 const inputAnchoMedio = "w-[calc(50%-10px)]";
 const inputAncho = "w-full";
-const soloLectura = "bg-blue-50";
-const soloLectura2 = "bg-green-100";
+const soloLectura = "bg-blue-50 dark:bg-gray-800";
+const soloLectura2 = "bg-green-100 dark:bg-green-800";
 
 // Funciones
 function reemplazarComa(valor) {
-
-   if (valor != "Cargando...") {
-  // Redondeamos a 2 decimales
-  let num = Math.round(valor * 100) / 100;
-  // Convertimos a string
-  num = num.toString();
-  // Reemplazamos la coma por un punto
-  num = num.replace(".", ",");
-  return num;
+  if (valor != "Cargando...") {
+    // Redondeamos a 2 decimales
+    let num = Math.round(valor * 100) / 100;
+    // Convertimos a string
+    num = num.toString();
+    // Reemplazamos la coma por un punto
+    num = num.replace(".", ",");
+    return num;
   } else {
     return valor;
   }
@@ -48,7 +47,7 @@ function App() {
         setFetchCompleto(true);
       });
 
-      fetch("https://www.dolarsi.com/api/api.php?type=valoresprincipales")
+    fetch("https://www.dolarsi.com/api/api.php?type=valoresprincipales")
       // Recuperamos la respuesta que ya viene en formato JSON
       .then((response) => response.json())
       // Recuperamos los datos de la respuesta
@@ -59,34 +58,55 @@ function App() {
         setCotizacion2(number);
         setFetchCompleto2(true);
       });
-
   }, []);
 
-  const calculos = () => {    
+  const calculos = () => {
     let dolares = document.getElementById("dolares").value;
     setInput1(dolares * cotizacion2);
-    setInput2((dolares * cotizacion2) * 0.3);
-    setInput3((dolares * cotizacion2) * 0.45);
-    setInput4((dolares * cotizacion2) * 1.75);
-    setInput5((dolares * cotizacion) * 0.98);
-    setInput6((dolares * cotizacion) - ((dolares * cotizacion) * 0.04 + 0.25));
+    setInput2(dolares * cotizacion2 * 0.3);
+    setInput3(dolares * cotizacion2 * 0.45);
+    setInput4(dolares * cotizacion2 * 1.75);
+    setInput5(dolares * cotizacion * 0.98);
+    setInput6(dolares * cotizacion - (dolares * cotizacion * 0.04 + 0.25));
   };
-
 
   return (
     <div className="w-screen flex justify-center items-center gap-5 ">
       <div className="px-12 py-12 sm:px-20 max-w-5xl flex gap-5 flex-wrap justify-evenly">
-        <h1 className="text-4xl font-bold w-full text-center mb-2" style={{color: "#635bff"}}>
+        <h1
+          className="text-4xl font-bold w-full text-center mb-2"
+          style={{ color: "#635bff" }}
+        >
           Calculadora de pagos que recibo en Stripe
         </h1>
-        <p className="text-xs w-full text-center"> <strong>Disclaimer:</strong> Esta calculadora es solo una aproximación. Las fuentes de datos pueden variar y no me hago responsable de los resultados obtenidos. Es solo una herramienta que desarrolle para mi uso personal. Para saber el monto aproximado que recibo si cobro en pesos argentinos en Stripe.</p>
-        <p className="text-m w-full text-center mb-6"> Cotización euro: <strong style={{color: "#635bff"}}>U$D {reemplazarComa(cotizacion)}</strong> - Cotización del dolar: <strong style={{color: "#635bff"}}>AR$ {reemplazarComa(cotizacion2)}</strong><br /><span className="text-xs w-full text-center mb-6">Datos actualizados al: {new Date().toLocaleString()}</span></p>
-        
+        <p className="text-xs w-full text-center">
+          {" "}
+          <strong>Disclaimer:</strong> Esta calculadora es solo una
+          aproximación. Las fuentes de datos pueden variar y no me hago
+          responsable de los resultados obtenidos. Es solo una herramienta que
+          desarrolle para mi uso personal. Para saber el monto aproximado que
+          recibo si cobro en pesos argentinos en Stripe.
+        </p>
+        <p className="text-m w-full text-center mb-6">
+          {" "}
+          Cotización euro:{" "}
+          <strong style={{ color: "#635bff" }}>
+            U$D {reemplazarComa(cotizacion)}
+          </strong>{" "}
+          - Cotización del dolar:{" "}
+          <strong style={{ color: "#635bff" }}>
+            AR$ {reemplazarComa(cotizacion2)}
+          </strong>
+          <br />
+          <span className="text-xs w-full text-center mb-6">
+            Datos actualizados al: {new Date().toLocaleString()}
+          </span>
+        </p>
         <TextField
           id="dolares"
           label="U$D (Dolares) que paga el cliente:"
           defaultValue="0"
-          onChange={ () => calculos() }
+          onChange={() => calculos()}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">U$D </InputAdornment>
@@ -149,9 +169,7 @@ function App() {
           value={reemplazarComa(input5)}
           InputProps={{
             readOnly: true,
-            startAdornment: (
-              <InputAdornment position="start">€</InputAdornment>
-            ),
+            startAdornment: <InputAdornment position="start">€</InputAdornment>,
           }}
           variant="outlined"
           className={inputAnchoMedio + " " + soloLectura}
@@ -166,7 +184,18 @@ function App() {
           variant="outlined"
           className={inputAnchoMedio + " " + soloLectura2}
         />
-      <p className="text-s w-full text-center mt-6"> Hecho con la mejor 🤙 por <a href="https://github.com/creativoma" target="_blank"  style={{color: "#635bff"}}>Mariano Álvarez</a> - Copyright © {new Date().getFullYear()}</p>
+        <p className="text-s w-full text-center mt-6">
+          {" "}
+          Hecho con la mejor 🤙 por{" "}
+          <a
+            href="https://github.com/creativoma"
+            target="_blank"
+            style={{ color: "#635bff" }}
+          >
+            Mariano Álvarez
+          </a>{" "}
+          - Copyright © {new Date().getFullYear()}
+        </p>
       </div>
     </div>
   );
