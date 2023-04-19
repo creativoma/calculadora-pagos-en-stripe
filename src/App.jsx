@@ -11,6 +11,8 @@ const soloLectura2 = "bg-green-100";
 
 // Funciones
 function reemplazarComa(valor) {
+
+   if (valor != "Cargando...") {
   // Redondeamos a 2 decimales
   let num = Math.round(valor * 100) / 100;
   // Convertimos a string
@@ -18,6 +20,9 @@ function reemplazarComa(valor) {
   // Reemplazamos la coma por un punto
   num = num.replace(".", ",");
   return num;
+  } else {
+    return valor;
+  }
 }
 
 function App() {
