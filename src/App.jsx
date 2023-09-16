@@ -38,28 +38,43 @@ function App() {
   const [input6, setInput6] = useState(0);
 
   useEffect(() => {
-    fetch("https://creativoma.com/api/cotizacion-eur-usd/index.php")
-      // Recuperamos la respuesta que ya viene en formato JSON
-      .then((response) => response.json())
-      // Recuperamos los datos de la respuesta
-      .then((data) => {
-        setCotizacion(data.EUR_to_USD);
-        setFetchCompleto(true);
-      });
-
-    fetch("https://www.dolarsi.com/api/api.php?type=valoresprincipales")
-      // Recuperamos la respuesta que ya viene en formato JSON
-      .then((response) => response.json())
-      // Recuperamos los datos de la respuesta
-      .then((data2) => {
-        let string = data2[0].casa.venta;
-        string = string.replace(",", ".");
-        let number = parseFloat(string);
-        setCotizacion2(number);
-        setFetchCompleto2(true);
-      });
+    try {
+      // Realiza ambos fetch en paralelo
+      Promise.all([
+        fetch("https://creativoma.com/api/cotizacion-eur-usd/index.php")
+          .then((response) => response.json()),
+        fetch("https://www.dolarsi.com/api/api.php?type=valoresprincipales")
+          .then((response) => response.json())
+          .catch(() => {
+            // En caso de error en el segundo fetch, retorna un valor predeterminado
+            return { casa: { venta: "0" } };
+          }),
+        fetch("https://dolarapi.com/v1/dolares")
+          .then((response) => response.json())
+          .catch(() => {
+            // En caso de error en el tercer fetch, retorna un valor predeterminado
+            return [{ venta: "0" }];
+          }),
+      ])
+        .then(([data, data2, data3]) => {
+          // Procesa los resultados y establece las variables de estado
+          setCotizacion(data.EUR_to_USD);
+          setCotizacion2(parseFloat(data2.casa.venta.replace(",", ".")));
+          // Si el tercer fetch fue exitoso, puedes usar su valor, de lo contrario, se usará el valor predeterminado
+          setCotizacion2(parseFloat(data3[0].venta));
+          setFetchCompleto(true);
+        })
+        .catch((error) => {
+          // Maneja los errores generales aquí
+          console.error(error);
+        });
+    } catch (error) {
+      // Maneja los errores generales aquí
+      console.error(error);
+    }
   }, []);
-
+  
+  
   const calculos = () => {
     let dolares = document.getElementById("dolares").value;
     setInput1(dolares * cotizacion2);
