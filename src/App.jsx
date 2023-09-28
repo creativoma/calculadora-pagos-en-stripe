@@ -59,7 +59,7 @@ function App() {
         .then(([data, data2, data3]) => {
           // Procesa los resultados y establece las variables de estado
           setCotizacion(data.EUR_to_USD);
-          setCotizacion2(parseFloat(data2.casa.venta.replace(",", ".")));
+          setCotizacion2(parseFloat(data2?.casa?.venta?.replace(",", ".")) || 0);
           // Si el tercer fetch fue exitoso, puedes usar su valor, de lo contrario, se usará el valor predeterminado
           setCotizacion2(parseFloat(data3[0].venta));
           setFetchCompleto(true);
