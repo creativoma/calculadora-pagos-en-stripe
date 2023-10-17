@@ -44,12 +44,12 @@ function App() {
       Promise.all([
         fetch("https://creativoma.com/api/cotizacion-eur-usd/index.php")
           .then((response) => response.json()),
-        fetch("https://www.dolarsi.com/api/api.php?type=valoresprincipales")
-          .then((response) => response.json())
-          .catch(() => {
-            // En caso de error en el segundo fetch, retorna un valor predeterminado
-            return { casa: { venta: "0" } };
-          }),
+        // fetch("https://www.dolarsi.com/api/api.php?type=valoresprincipales")
+        //   .then((response) => response.json())
+        //   .catch(() => {
+        //     // En caso de error en el segundo fetch, retorna un valor predeterminado
+        //     return { casa: { venta: "0" } };
+        //   }),
         fetch("https://dolarapi.com/v1/dolares")
           .then((response) => response.json())
           .catch(() => {
@@ -57,10 +57,10 @@ function App() {
             return [{ venta: "0" }];
           }),
       ])
-        .then(([data, data2, data3]) => {
+        .then(([data, data3]) => {
           // Procesa los resultados y establece las variables de estado
           setCotizacion(data.EUR_to_USD);
-          setCotizacion2(parseFloat(data2?.casa?.venta?.replace(",", ".")) || 0);
+          // setCotizacion2(parseFloat(data2?.casa?.venta?.replace(",", ".")) || 0);
           // Si el tercer fetch fue exitoso, puedes usar su valor, de lo contrario, se usará el valor predeterminado
           setCotizacion2(parseFloat(data3[0].venta));
           setFetchCompleto(true);
@@ -81,8 +81,8 @@ function App() {
     setInput1(dolares * cotizacion2);
     setInput2(dolares * cotizacion2 * 0.3);
     setInput3(dolares * cotizacion2 * 0.45);
-    setInput4(dolares * cotizacion2 * 1.75);
     setInput7(dolares * cotizacion2 * 0.25);
+    setInput4(dolares * cotizacion2 * 2.0);
     setInput5(dolares * cotizacion * 0.98);
     setInput6(dolares * cotizacion - (dolares * cotizacion * 0.04 + 0.25));
   };
