@@ -36,6 +36,7 @@ function App() {
   const [input4, setInput4] = useState(0);
   const [input5, setInput5] = useState(0);
   const [input6, setInput6] = useState(0);
+  const [input7, setInput7] = useState(0);
 
   useEffect(() => {
     try {
@@ -81,13 +82,14 @@ function App() {
     setInput2(dolares * cotizacion2 * 0.3);
     setInput3(dolares * cotizacion2 * 0.45);
     setInput4(dolares * cotizacion2 * 1.75);
+    setInput7(dolares * cotizacion2 * 0.25);
     setInput5(dolares * cotizacion * 0.98);
     setInput6(dolares * cotizacion - (dolares * cotizacion * 0.04 + 0.25));
   };
 
   return (
     <div className="w-screen flex justify-center items-center gap-5 ">
-      <div className="px-12 py-12 sm:px-20 max-w-5xl flex gap-5 flex-wrap justify-evenly">
+      <div className="px-12 py-12 lg:px-20 sm:w-[80%] w-[100%] flex gap-5 flex-wrap justify-evenly">
         <h1
           className="text-4xl font-bold w-full text-center mb-2"
           style={{ color: "#635bff" }}
@@ -128,7 +130,7 @@ function App() {
             ),
           }}
           variant="outlined"
-          className={inputAncho}
+          className={inputAnchoMedio}
           type="number"
         />
         <TextField
@@ -158,6 +160,18 @@ function App() {
         <TextField
           label="Percepcion Rg 4815/2020 (+ 45%)"
           value={reemplazarComa(input3)}
+          InputProps={{
+            readOnly: true,
+            startAdornment: (
+              <InputAdornment position="start">AR$</InputAdornment>
+            ),
+          }}
+          variant="outlined"
+          className={inputAnchoMedio + " " + soloLectura}
+        />
+        <TextField
+          label="Percepcion Rg 5430 Afip (+ 25%)"
+          value={reemplazarComa(input7)}
           InputProps={{
             readOnly: true,
             startAdornment: (
