@@ -1,22 +1,16 @@
-// Dependencias
 import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 
-// Variables
 const inputAnchoMedio = "w-[calc(50%-10px)]";
 const inputAncho = "w-full";
 const soloLectura = "bg-blue-50 dark:bg-gray-800";
 const soloLectura2 = "bg-green-100 dark:bg-green-800";
 
-// Funciones
 function reemplazarComa(valor) {
   if (valor != "Cargando...") {
-    // Redondeamos a 2 decimales
     let num = Math.round(valor * 100) / 100;
-    // Convertimos a string
     num = num.toString();
-    // Reemplazamos la coma por un punto
     num = num.replace(".", ",");
     return num;
   } else {
@@ -42,8 +36,9 @@ function App() {
     try {
       // Realiza ambos fetch en paralelo
       Promise.all([
-        fetch("https://creativoma.com/api/cotizacion-eur-usd/index.php")
-          .then((response) => response.json()),
+        fetch("https://creativoma.com/api/cotizacion-eur-usd/index.php").then(
+          (response) => response.json()
+        ),
         // fetch("https://www.dolarsi.com/api/api.php?type=valoresprincipales")
         //   .then((response) => response.json())
         //   .catch(() => {
@@ -74,15 +69,14 @@ function App() {
       console.error(error);
     }
   }, []);
-  
-  
+
   const calculos = () => {
     let dolares = document.getElementById("dolares").value;
     setInput1(dolares * cotizacion2);
     setInput2(dolares * cotizacion2 * 0.3);
-    setInput3(dolares * cotizacion2 * 0.45);
-    setInput7(dolares * cotizacion2 * 0.25);
-    setInput4(dolares * cotizacion2 * 2.0);
+    // setInput3(dolares * cotizacion2 * 0.45);
+    setInput7(dolares * cotizacion2 * 0.3);
+    setInput4(dolares * cotizacion2 * 1.6);
     setInput5(dolares * cotizacion * 0.98);
     setInput6(dolares * cotizacion - (dolares * cotizacion * 0.04 + 0.25));
   };
@@ -157,7 +151,7 @@ function App() {
           variant="outlined"
           className={inputAnchoMedio + " " + soloLectura}
         />
-        <TextField
+        {/* <TextField
           label="Percepcion Rg 4815/2020 (+ 45%)"
           value={reemplazarComa(input3)}
           InputProps={{
@@ -168,9 +162,9 @@ function App() {
           }}
           variant="outlined"
           className={inputAnchoMedio + " " + soloLectura}
-        />
+        /> */}
         <TextField
-          label="Percepcion Rg 5430 Afip (+ 25%)"
+          label="Percepcion Rg 5430 Afip (+ 30%)"
           value={reemplazarComa(input7)}
           InputProps={{
             readOnly: true,
@@ -211,19 +205,18 @@ function App() {
             startAdornment: <InputAdornment position="start">€</InputAdornment>,
           }}
           variant="outlined"
-          className={inputAnchoMedio + " " + soloLectura2}
+          className={inputAncho + " " + soloLectura2}
         />
         <p className="text-s w-full text-center mt-6">
-          {" "}
-          Hecho con la mejor 🤙 por{" "}
+          By{" "}
           <a
             href="https://github.com/creativoma"
             target="_blank"
-            style={{ color: "#635bff" }}
+            className="text-[#535bf2]"
           >
             Mariano Álvarez
           </a>{" "}
-          - Copyright © {new Date().getFullYear()}
+          ~ {new Date().getFullYear()}
         </p>
       </div>
     </div>
