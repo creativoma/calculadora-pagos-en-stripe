@@ -18,4 +18,4 @@ Si queres colaborar con el proyecto, podes hacerlo de las siguientes maneras:
 
 ## Licencia
 
-MIT License - Copyright (c) 2023 Mariano Álvarez
+MIT License - Copyright (c) 2024 Mariano Álvarez
